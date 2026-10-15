@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Business of Being Funny — C1 Interactive Lesson</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#14532d; --green2:#1f6b3a; --lime:#a3e635; --black:#141414;
+  --yellow:#fde047; --orange:#f97316; --paper:#f5f5f1; --ink:#1c1c1c; --line:#d8d8d0;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{font-family:'Inter','Segoe UI',Arial,sans-serif; background:var(--paper); color:var(--ink); line-height:1.7;}
+h1,h2,h3,h4{font-family:'Lora',Georgia,'Times New Roman',serif; line-height:1.3;}
+.wrap{max-width:960px; margin:0 auto; padding:0 20px 80px;}
+/* NAV */
+nav{position:sticky; top:0; z-index:50; background:var(--black); border-bottom:3px solid var(--lime);}
+nav .wrap{display:flex; flex-wrap:wrap; gap:4px; align-items:center; padding-top:8px; padding-bottom:8px;}
+nav a{color:#eee; text-decoration:none; font-weight:600; font-size:.8rem; letter-spacing:.05em; text-transform:uppercase; padding:6px 12px; border-bottom:2px solid transparent; transition:.15s;}
+nav a:hover{color:var(--lime); border-bottom-color:var(--lime);}
+.score{margin-left:auto; background:var(--green); color:#fff; font-weight:700; padding:5px 14px; border-radius:3px; font-size:.85rem;}
+.trophy{background:var(--lime); color:var(--black); font-weight:800; padding:5px 14px; border-radius:3px; font-size:.85rem;}
+/* HERO */
+.hero{background:linear-gradient(160deg,var(--green) 0%,#0d3a1f 70%,var(--black) 130%); color:#fff; padding:52px 0 56px; border-bottom:6px solid var(--lime); margin-bottom:34px;}
+.hero .wrap{padding-bottom:0;}
+.hero .badge{display:inline-block; background:var(--lime); color:var(--black); font-weight:800; letter-spacing:.08em; font-size:.75rem; text-transform:uppercase; padding:5px 14px; border-radius:2px; margin-bottom:16px;}
+.hero h1{font-size:2.5rem; margin-bottom:12px;}
+.hero p{max-width:640px; font-size:1.02rem; opacity:.94;}
+.lessonmap{border:1px solid rgba(255,255,255,.35); border-radius:4px; padding:14px 18px; margin-top:22px; font-size:.92rem;}
+.lessonmap b{color:var(--yellow);}
+/* SECTIONS */
+section{margin:56px 0;}
+.sec-head{display:flex; align-items:center; gap:12px; margin-bottom:8px;}
+.sec-num{font-weight:800; font-size:.8rem; letter-spacing:.08em; color:var(--black); background:var(--lime); padding:6px 14px; border-radius:2px; text-transform:uppercase;}
+.sec-head h2{font-size:1.85rem; color:var(--green);}
+.sec-sub{color:#555; margin-bottom:22px; max-width:700px;}
+/* CARDS */
+.card{background:#fff; border-radius:5px; padding:26px; margin-bottom:20px; box-shadow:0 2px 8px rgba(0,0,0,.07); border-left:5px solid var(--green);}
+.card.c-coral{border-left-color:var(--orange);} .card.c-lemon{border-left-color:var(--yellow);} .card.c-purple{border-left-color:var(--black);} .card.c-mint{border-left-color:var(--lime);}
+.card h3{margin-bottom:12px; font-size:1.3rem; color:var(--black);}
+.tag{display:inline-block; font-size:.7rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; padding:3px 10px; border-radius:2px; background:var(--lime); color:var(--black); margin-bottom:10px;}
+.tag.warm{background:var(--yellow); color:var(--black);} .tag.cool{background:#e5e5e0; color:var(--black);} .tag.gold{background:var(--orange); color:#fff;}
+.instructions{background:#fafaf5; border-left:4px solid var(--green); padding:12px 16px; border-radius:0 4px 4px 0; margin:10px 0 16px; font-size:.94rem;}
+/* VOCAB IN TEXT */
+.vw{font-weight:700; color:var(--green); border-bottom:2px dotted var(--orange); cursor:pointer; transition:.15s;}
+.vw:hover{background:var(--yellow);}
+.vw.sel{background:var(--yellow); border-bottom-style:solid;}
+.drawer{display:none; margin:14px 0 4px; background:#f6fce8; border-left:5px solid var(--lime); padding:12px 16px; border-radius:0 4px 4px 0; font-size:.96rem;}
+.drawer.show{display:block;}
+.drawer b{font-family:'Lora'; color:var(--green);}
+/* CLOZE */
+.gap-item{margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid var(--line);}
+.gap-item p{font-size:1rem; margin-bottom:8px;}
+.gap-item .qnum{font-weight:800; color:var(--orange); margin-right:6px;}
+.opts{display:flex; flex-wrap:wrap; gap:8px;}
+.opt{font-weight:600; font-size:.88rem; padding:7px 14px; border-radius:3px; border:1.5px solid #bbb; background:#fff; cursor:pointer; transition:.15s;}
+.opt:hover{border-color:var(--green); background:#fafaf5;}
+.opt.right{border-color:var(--green); background:var(--lime); color:var(--black);}
+.opt.wrongpick{border-color:var(--orange); background:#fff1e3; color:#9a3412;}
+.defpop{display:none; margin-top:8px; font-size:.9rem; background:#f6fce8; border-left:4px solid var(--lime); padding:8px 12px; border-radius:0 4px 4px 0;}
+.defpop.show{display:block;}
+/* INPUTS */
+.fill-row{margin-bottom:14px; font-size:1rem;}
+.fill-row input{font-weight:600; font-size:.95rem; padding:7px 12px; border-radius:3px; border:1.5px solid #aaa; outline:none; min-width:150px; text-align:center; background:#fff;}
+.fill-row input:focus{border-color:var(--green);}
+.fill-row input.right{border-color:var(--green); background:#f0fbe0;}
+.fill-row input.wrong{border-color:var(--orange); background:#fff1e3;}
+textarea{width:100%; min-height:90px; font-family:'Inter'; font-size:.95rem; padding:10px 12px; border:1.5px solid #aaa; border-radius:3px; resize:vertical; margin:6px 0 14px; background:#fff;}
+textarea:focus{border-color:var(--green); outline:none;}
+.btn{font-weight:700; font-size:.9rem; letter-spacing:.03em; border:none; cursor:pointer; padding:10px 22px; border-radius:3px; color:#fff; background:var(--green); transition:.15s;}
+.btn:hover{background:var(--green2);}
+.btn.alt{background:var(--black);} .btn.alt:hover{background:#333;}
+.btn.ghost{background:#fff; color:var(--black); border:1.5px solid #999;} .btn.ghost:hover{border-color:var(--black); background:#f5f5f0;}
+.feedback{font-weight:700; font-size:.95rem; margin:10px 0;}
+.feedback.good{color:var(--green);} .feedback.try{color:#c2410c;}
+/* KEY BOX */
+.keybox{display:none; margin-top:14px; background:#f0f0ea; border:1px solid var(--line); border-radius:4px; padding:16px 18px; font-size:.92rem; columns:2; column-gap:30px;}
+.keybox.show{display:block;}
+@media(max-width:600px){.keybox{columns:1;}}
+/* AUDIO + LISTENING */
+audio{width:100%; margin:12px 0;}
+.script{display:none; background:#fafaf5; border:1px solid var(--line); border-radius:4px; padding:18px; font-size:.9rem; max-height:440px; overflow:auto; margin-top:12px; white-space:pre-wrap;}
+.script.show{display:block;}
+.script b{color:var(--orange);}
+/* SPEAKING CARDS */
+.speak-card{background:#fff; border:2px solid var(--black); border-radius:5px; padding:36px 32px; text-align:center; min-height:210px; display:flex; flex-direction:column; justify-content:center;}
+.speak-card h3{font-size:1.6rem; color:var(--green); margin-bottom:14px;}
+.speak-card p{font-size:1.15rem; line-height:1.75;}
+.speak-controls{display:flex; gap:10px; justify-content:center; margin-top:16px; flex-wrap:wrap; align-items:center;}
+.stems{background:#fafaf5; border:1px solid var(--line); border-radius:4px; padding:14px 18px; font-size:.92rem; margin-top:18px;}
+.stems li{margin-left:20px; margin-bottom:4px;}
+/* READING */
+.reading{background:#fff; border-radius:5px; padding:32px; box-shadow:0 2px 8px rgba(0,0,0,.07); border-top:4px solid var(--green); font-size:1.03rem;}
+.reading p{margin-bottom:16px;}
+.reading .dropcap::first-letter{font-family:'Lora'; font-size:2.8rem; color:var(--green); float:left; line-height:1; margin:4px 8px 0 0;}
+.hl{background:linear-gradient(transparent 62%, var(--yellow) 62%); padding:0 2px; font-weight:700;}
+.tfns{display:flex; gap:8px; margin-top:6px;}
+.tfns button{font-size:.85rem; font-weight:700; padding:6px 18px; border-radius:3px; border:1.5px solid #bbb; background:#fff; cursor:pointer;}
+.tfns button.right{border-color:var(--green); background:var(--lime);}
+.tfns button.wrongpick{border-color:var(--orange); background:#fff1e3;}
+/* HOMEWORK */
+.hw-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:16px;}
+.hw-card{background:#fff; border-radius:5px; padding:20px; border-top:4px solid var(--orange); box-shadow:0 2px 8px rgba(0,0,0,.07);}
+.hw-card h4{margin-bottom:8px; font-size:1.08rem;}
+.hw-card p{font-size:.92rem;}
+.vocab-note{background:#f6fce8; border:1px solid var(--lime); border-radius:5px; padding:18px 20px; font-size:.92rem; margin-top:16px;}
+.copyrow{display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:10px;}
+footer{text-align:center; color:#777; font-size:.85rem; margin-top:60px;}
+.spark{display:inline-block; animation:pop .4s;}
+@keyframes pop{0%{transform:scale(0)}70%{transform:scale(1.4)}100%{transform:scale(1)}}
+/* DIRECTOR'S CUT BONUS */
+.bonus{display:none; margin-top:18px; background:#fffdf2; border:2px dashed var(--orange); border-radius:5px; padding:18px 20px;}
+.bonus.show{display:block; animation:pop .5s;}
+.bonus h4{color:#9a3412; margin-bottom:8px; font-size:1.1rem;}
+.mcqwrap{margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid var(--line);}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a href="#part1">Use of English</a>
+  <a href="#vocabgym">Vocabulary Gym</a>
+  <a href="#listening">Listening</a>
+  <a href="#speaking">Speaking</a>
+  <a href="#reading">Reading</a>
+  <a href="#homework">Homework</a>
+  <span class="trophy">🏆 <span id="trophies">0</span>/7</span>
+  <span class="score">⭐ <span id="score">0</span> pts</span>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <span class="badge">C1 · TWO-LESSON UNIT · BRITISH ENGLISH</span>
+  <h1>The Business of Being Funny</h1>
+  <p>Earthquakes, word power and a comedian's brain — a full unit of Use of English, Listening, Speaking and Reading built around the performer Kevin Burke. Work fast, score points, think deeper.</p>
+  <div class="lessonmap">
+    <b>Lesson 1:</b> Use of English (Cloze + Rewrite) → Vocabulary Gym (Word Formation) &nbsp;|&nbsp;
+    <b>Lesson 2:</b> Vocabulary Gym (Prepositions · MCQ · Error Clinic) → Listening → Speaking → Reading → Homework briefing
+  </div>
+</div></header>
+
+<div class="wrap">
+
+<!-- ================= PART 1: USE OF ENGLISH ================= -->
+<section id="part1">
+  <div class="sec-head"><span class="sec-num">PART 1</span><h2>Use of English: Surviving the Shake</h2></div>
+  <p class="sec-sub">A text about earthquakes. Some of the vocabulary is underlined — click any underlined word to see its meaning in the dictionary panel, then tackle the gaps below the text.</p>
+
+  <div class="card c-coral">
+    <span class="tag warm">Exam task · Multiple choice</span>
+    <h3>Task 1 — The Cloze</h3>
+    <div class="instructions">Read the text and choose the word that best completes each gap. Click the <b>underlined words</b> in the text to check their meaning. <b>2 points</b> per correct answer; a bonus challenge unlocks at 15/15.</div>
+    <p style="margin-bottom:14px; font-size:1.04rem;">Earthquakes are amongst the most destructive <span class="gap" data-n="1">(1) ________</span> disasters. They usually <span class="gap" data-n="2">(2) ________</span> without any warning and <span class="gap" data-n="3">(3) ________</span> in a great <span class="gap" data-n="4">(4) ________</span> of life and an enormous <span class="vw" data-def="the complete destruction of something, especially buildings">demolition</span> of buildings. Additionally, they may cause <span class="vw" data-def="destroying or ruining something completely">devastating</span> <span class="vw" data-def="masses of earth and rock that slide down a slope">landslides</span> or create gigantic tidal waves which, in <span class="gap" data-n="5">(5) ________</span>, are <span class="vw" data-def="extremely large in size">colossal</span> walls of water smashing into <span class="vw" data-def="stretches of land along the edge of the sea">seashores</span> with such force that they are <span class="gap" data-n="6">(6) ________</span> of destroying coastal cities. However, the <span class="gap" data-n="7">(7) ________</span> majority of <span class="vw" data-def="deaths, especially in an accident or disaster">fatalities</span> and serious injuries <span class="gap" data-n="8">(8) ________</span> about when buildings <span class="gap" data-n="9">(9) ________</span>. Most frequently, the earthquake lasts 30 to 60 seconds, so usually there is no time to <span class="gap" data-n="10">(10) ________</span> the <span class="vw" data-def="likely to cause death">mortal</span> <span class="gap" data-n="11">(11) ________</span> once the shaking starts. The <span class="vw" data-def="fierce, violent and uncontrolled">savage</span> forces of an earthquake trigger <span class="gap" data-n="12">(12) ________</span> a complex chain <span class="gap" data-n="13">(13) ________</span> in the building's structure when it is shaken, lifted, pushed or pulled. A building's height, its shape and construction materials are the most <span class="vw" data-def="important or noticeable enough to have an effect">significant</span> <span class="gap" data-n="14">(14) ________</span> deciding about the survival or collapse of the structure and, <span class="vw" data-def="as a result; therefore">consequently</span>, about the life or death of its <span class="gap" data-n="15">(15) ________</span>.</p>
+    <div class="drawer" id="drawer"><b id="drawerW"></b> — <span id="drawerD"></span></div>
+    <div id="clozeBox"></div>
+    <div class="keybox" id="clozeKey">
+      1. natural &nbsp; 2. strike &nbsp; 3. result &nbsp; 4. loss &nbsp; 5. fact<br>
+      6. capable &nbsp; 7. vast &nbsp; 8. come &nbsp; 9. collapse &nbsp; 10. avert<br>
+      11. upshot &nbsp; 12. off &nbsp; 13. reaction &nbsp; 14. factors &nbsp; 15. inhabitants
+    </div>
+    <button class="btn ghost" onclick="toggleKey('clozeKey',this)">Show answer key</button>
+    <div class="bonus" id="b1">
+      <h4>🏆 Director's Cut 1 — Lexicographer's Corner</h4>
+      <p>Perfect cloze! Now prove you own the vocabulary: pick any <b>five</b> of the underlined words from the text and write a dictionary-style entry for each — part of speech, a precise definition, and your own example sentence.</p>
+    </div>
+  </div>
+
+  <div class="card c-lemon">
+    <span class="tag gold">Fast finishers · Level up</span>
+    <h3>Task 2 — Rewrite without losing meaning</h3>
+    <div class="instructions">Rewrite each sentence using the word in brackets. Keep the meaning identical and the register formal. Write your versions in the boxes below, then compare with a partner.</div>
+    <ol style="margin-left:22px;">
+      <li>The earthquake caused the deaths of over two thousand people. <b>(LOSS)</b><textarea placeholder="Your rewrite…"></textarea></li>
+      <li>The government acted quickly to prevent a bigger disaster. <b>(AVERT)</b><textarea placeholder="Your rewrite…"></textarea></li>
+      <li>Everything that happened afterwards was a direct consequence of that one decision. <b>(UPSHOT)</b><textarea placeholder="Your rewrite…"></textarea></li>
+    </ol>
+    <div class="keybox" id="levelupKey">
+      1. The earthquake <b>resulted in a great loss of life</b> / <b>led to the loss of</b> over two thousand lives.<br>
+      2. The government acted quickly <b>to avert</b> a bigger disaster.<br>
+      3. <b>The upshot of</b> that one decision <b>was</b> everything that happened afterwards.
+    </div>
+    <button class="btn ghost" onclick="toggleKey('levelupKey',this)">Show model answers</button>
+  </div>
+</section>
+
+<!-- ================= VOCABULARY GYM ================= -->
+<section id="vocabgym">
+  <div class="sec-head"><span class="sec-num" style="background:var(--teal);">GYM</span><h2>The Vocabulary Gym</h2></div>
+  <p class="sec-sub">Four training stations that recycle everything you know — word formation, prepositions, and putting it all to work in new sentences.</p>
+
+  <div class="card c-coral">
+    <span class="tag warm">Station 1 · Word formation</span>
+    <h3>Put the words in the correct form</h3>
+    <div class="instructions">Type the correct form of the word in capitals. Click <b>Check</b> to score — <b>1 point</b> per correct answer. Watch out for negative prefixes and spelling traps!</div>
+    <div id="wfBox"></div>
+    <p class="feedback" id="wfMsg"></p>
+    <button class="btn" onclick="checkFill('wfBox','wfMsg',15,'b3')">Check answers</button>
+    <div class="keybox" id="wfKey">
+      1. difference &nbsp; 2. behaviour &nbsp; 3. practicable/practical &nbsp; 4. troublesome<br>
+      5. truthful &nbsp; 6. solution &nbsp; 7. division &nbsp; 8. fashionable &nbsp; 9. disapproval<br>
+      10. friendship &nbsp; 11. hazardous &nbsp; 12. confidence &nbsp; 13. length &nbsp; 14. doubtful &nbsp; 15. meaning
+    </div>
+    <button class="btn ghost" onclick="toggleKey('wfKey',this)">Show answer key</button>
+    <div class="bonus" id="b3">
+      <h4>🏆 Director's Cut 3 — The Champions' League</h4>
+      <p>Flawless formation! Three trickier ones await — mind the prefixes:</p>
+      <div id="b3Box"></div>
+      <p class="feedback" id="b3Msg"></p>
+      <button class="btn" onclick="checkFill('b3Box','b3Msg',3)">Check bonus answers</button>
+      <div class="keybox" id="b3Key">1. disorganisation &nbsp; 2. persistence &nbsp; 3. width</div>
+      <button class="btn ghost" onclick="toggleKey('b3Key',this)">Show key</button>
+    </div>
+  </div>
+
+  <div class="card c-lemon">
+    <span class="tag gold">Station 2 · Prepositions</span>
+    <h3>Insert the correct prepositions</h3>
+    <div class="instructions">Each gap needs one word: <b>at, between, by, in, for, from, of, on, with</b> (some are used more than once, some not at all). <b>1 point</b> per gap.</div>
+    <div id="prepBox"></div>
+    <p class="feedback" id="prepMsg"></p>
+    <button class="btn alt" onclick="checkFill('prepBox','prepMsg',15,'b4')">Check answers</button>
+    <div class="keybox" id="prepKey">
+      1. of &nbsp; 2. by &nbsp; 3. on &nbsp; 4. at &nbsp; 5. in &nbsp; 6. in &nbsp; 7. at/with<br>
+      8. from &nbsp; 9. for &nbsp; 10. in &nbsp; 11. by, in &nbsp; 12. of &nbsp; 13. on &nbsp; 14. with &nbsp; 15. in, between
+    </div>
+    <button class="btn ghost" onclick="toggleKey('prepKey',this)">Show answer key</button>
+    <div class="bonus" id="b4">
+      <h4>🏆 Director's Cut 4 — The Premiere</h4>
+      <p>Preposition perfection! Complete this mini-scene — five gaps, five different prepositions:</p>
+      <div id="b4Box"></div>
+      <p class="feedback" id="b4Msg"></p>
+      <button class="btn alt" onclick="checkFill('b4Box','b4Msg',5)">Check bonus answers</button>
+      <div class="keybox" id="b4Key">1. onto &nbsp; 2. with &nbsp; 3. to &nbsp; 4. for &nbsp; 5. to</div>
+      <button class="btn ghost" onclick="toggleKey('b4Key',this)">Show key</button>
+    </div>
+  </div>
+
+  <div class="card c-mint">
+    <span class="tag">Station 3 · Use it or lose it</span>
+    <h3>Choose the right word</h3>
+    <div class="instructions">Choose the word that best completes each sentence. All the options come from this unit — pick the one that fits the meaning. <b>2 points</b> per answer; all 8 correct unlock a bonus challenge.</div>
+    <div id="useBox"></div>
+    <p class="feedback" id="useMsg"></p>
+    <button class="btn ghost" onclick="toggleKey('useKey',this)">Show answer key</button>
+    <div class="keybox" id="useKey">
+      1. b &nbsp; 2. c &nbsp; 3. a &nbsp; 4. c &nbsp; 5. a &nbsp; 6. b &nbsp; 7. c &nbsp; 8. a
+    </div>
+    <div class="bonus" id="b2">
+      <h4>🏆 Director's Cut 2 — The Examiner's Chair</h4>
+      <p>8/8! Now reverse roles: write <b>one new exam-style item</b> — a gap with four options (a–d) where only one fits, plus an answer key. Distractors should be plausible but wrong. Swap with a partner and solve each other's.</p>
+    </div>
+  </div>
+
+  <div class="card c-purple">
+    <span class="tag cool">Station 4 · Error clinic</span>
+    <h3>Five sentences, five subtle mistakes</h3>
+    <div class="instructions">These errors are the kind even advanced learners make — wrong dependent prepositions, uncountable nouns, near-miss word pairs. Each sentence contains ONE mistake. Write the <b>corrected word or phrase</b> in the gap. <b>2 points</b> per fix.</div>
+    <div id="errBox"></div>
+    <p class="feedback" id="errMsg"></p>
+    <button class="btn alt" onclick="checkFill('errBox','errMsg',5)">Check answers</button>
+    <div class="keybox" id="errKey">
+      1. research &nbsp; 2. discussed &nbsp; 3. Despite &nbsp; 4. sensitive &nbsp; 5. comprises
+    </div>
+    <button class="btn ghost" onclick="toggleKey('errKey',this)">Show answer key</button>
+  </div>
+</section>
+
+<!-- ================= LISTENING ================= -->
+<section id="listening">
+  <div class="sec-head"><span class="sec-num" style="background:var(--purple);">PART 2</span><h2>Listening: Kevin Burke, Comedian</h2></div>
+  <p class="sec-sub">An Irish comedian with a maths degree, a bestselling kind of stage presence — and an age people keep guessing wrong.</p>
+
+  <div class="card c-purple">
+    <span class="tag cool">Lead-in</span>
+    <h3>Meet Kevin</h3>
+    <p><b>Kevin Burke</b> is an Irish stand-up comedian and a familiar face on television. What makes him unusual is what he reads: <i>Laughter</i>, a book by neuroscientist Robert Provine, which he treats almost like a manual for his own profession. Once, he built an entire show around asking the audience to guess his age — the average guess was <b>37</b>. He was 29. He insists that looking older helps him "own the stage". Before you listen, prime these five words:</p>
+    <ul style="margin:12px 0 4px 22px;">
+      <li><b>cliché</b> — an overused, predictable idea</li>
+      <li><b>prone to</b> — likely to suffer from</li>
+      <li><b>to dabble (in)</b> — to try something casually, without full commitment</li>
+      <li><b>hustle</b> — to work energetically and persistently</li>
+      <li><b>lumbering</b> — moving heavily and awkwardly</li>
+    </ul>
+  </div>
+
+  <div class="card c-coral">
+    <span class="tag warm">Round 1 · First listening</span>
+    <h3>Questions 15–20</h3>
+    <div class="instructions">Listen and choose the answer (A, B, C or D) which fits best according to what you hear. You will hear the recording twice.</div>
+    <audio controls preload="auto" src="12.mp3"></audio>
+    <div id="mcqBox"></div>
+    <p class="feedback" id="mcqMsg"></p>
+    <button class="btn" onclick="checkMCQ()">Check answers</button>
+    <button class="btn ghost" onclick="toggleKey('mcqKey',this)">Show answers + evidence</button>
+    <div class="bonus" id="b6">
+      <h4>🏆 Director's Cut 6 — Script Detective</h4>
+      <p>6/6 on first listening! Find these four ideas in the transcript and note <b>who</b> introduces them and <b>one exact phrase</b> Kevin uses for each: (1) the assumption about comedians' mental health, (2) the café experiment, (3) the quiz show, (4) the age-guessing show. Then paraphrase each idea in your own words.</p>
+    </div>
+    <div class="keybox" id="mcqKey">
+      <b>15. B</b> — "People wrongly tend to assume that comedians will be prone to depression. That's probably because…"<br>
+      <b>16. C</b> — the book explains why audiences laugh (a social mechanism, "a breaking of tension").<br>
+      <b>17. C</b> — debating society, university newspaper, orientation meetings: "I loved anything with an audience."<br>
+      <b>18. D</b> — he "hustled and gigged wherever possible, gradually building up my act."<br>
+      <b>19. A</b> — "I'm definitely happiest when I am on stage… TV can't capture that somehow."<br>
+      <b>20. B</b> — comedy is "all about owning the stage"; his presence lets him "dominate the stage."
+    </div>
+  </div>
+
+  <div class="card c-mint">
+    <span class="tag">Round 2 · Second listening</span>
+    <h3>Listen for language</h3>
+    <div class="instructions">Play the recording again. This time, complete the five gaps with the exact words Kevin uses. <b>2 points</b> per gap.</div>
+    <div id="liBox"></div>
+    <p class="feedback" id="liMsg"></p>
+    <button class="btn alt" onclick="checkFill('liBox','liMsg',5)">Check answers</button>
+    <div class="keybox" id="liKey">1. prone &nbsp; 2. mechanism &nbsp; 3. set &nbsp; 4. dabbling &nbsp; 5. capture</div>
+    <button class="btn ghost" onclick="toggleKey('liKey',this)">Show answers</button>
+    <button class="btn ghost" onclick="toggleScript()">Show / hide transcript</button>
+    <div class="script" id="scriptBox"><b>Interviewer:</b> My guest today is the Irish comedian Kevin Burke, now a familiar face on our TV screens. Kevin, welcome.
+
+<b>Kevin Burke:</b> Hi.
+
+<b>Interviewer:</b> And it's generally a smiling face we see too, isn't it, Kevin? But are you really like that, or is there another you 'behind the painted smile', as it were?
+
+<b>Kevin Burke:</b> Well, I'm always being asked that. The cliché that every comedian carries within a black heart is fundamentally untrue. I'm afraid my childhood unfolded without major incident and to date there's been very little trauma in my life. So I'm sorry to disappoint everyone, but I'm a fairly well-adjusted human being. People wrongly tend to assume that comedians will be prone to depression. That's probably because the comedian is always finding humour in everyday misery; that's how comedy works. It's what makes it funny. I know these things — I've read about them in books.
+
+<b>Interviewer:</b> Yes, tell me about the books — because you really mean that, don't you?
+
+<b>Kevin Burke:</b> Indeed I do. There's one particular book I admire. It's called Laughter, and it's by a neuroscientist called Robert Provine; he's the world's leading expert on laughter. It wasn't his intention, but it reads like a kind of 'How To' book for comedians. Did you know, for example, that in the comfort of your own home, you rarely laugh out loud, no matter how funny a joke or situation might be? But in a café, chatting amongst friends, you'll laugh at almost anything without fail. Most of the time, laughter's simply a nervous mechanism, a breaking of tension. Audiences laugh at comedians because those around them are laughing too. It's a social thing, according to Provine. And so, as a stand-up comedian, all I do is break their collective tension. I lift the audience up and then drop them.
+
+<b>Interviewer:</b> It's probably safe to assume that not all comedians approach comedy quite so theoretically, is it? I mean, you're university educated, aren't you?
+
+<b>Kevin Burke:</b> You're probably right, but then that's me, I'm afraid. I'm not particularly proud of the fact, but there you are. Yes, I did mathematical sciences as my degree subject. I've always loved words, adored English at school, but was drawn inexorably towards numbers. And I loved every minute of it. But the trouble with maths at university level is it attracts some incredibly clever, focussed people, which doesn't exactly make for a fun social life. That's how I came to join the debating society, and that kind of got me noticed because I have a way with words as well as with numbers. And before I knew it, I was writing for the university newspaper as well, doing orientation meetings for new students — I loved anything with an audience, you see. I couldn't help myself.
+
+<b>Interviewer:</b> So, that was the beginning of your career as an entertainer, really?
+
+<b>Kevin Burke:</b> Well, sort of. After graduation, I began working for a local newspaper, writing a weekly column that was 700 words of whimsical nonsense. It was fun, but I wasn't set on journalism, so I started dabbling in stand-up comedy — just testing the water in various clubs at first. I hustled and gigged wherever possible, gradually building up my act, and always on the lookout for the next opening. Then, one day, I landed a TV spot in Ireland, hosting a children's programme. From there, I kind of hopscotched over to comedy.
+
+<b>Interviewer:</b> Is that the way to do it, then?
+
+<b>Kevin Burke:</b> Yes, once your name's known, you get asked to do a few different kinds of programmes, which I did. After that, doors start opening up in all directions. You learn what to accept and what to avoid. I once did a quiz show and it was disastrous. I won't be doing that again, but it was useful experience at the time. But TV feels comfortable for me, and I'm happy to go along with most of whatever comes along. But I'm definitely happiest when I am on stage. It's certainly where I think I'm best, and TV can't capture that somehow, although the TV work is just as challenging in its own way.
+
+<b>Interviewer:</b> How do you account for your success on stage, then?
+
+<b>Kevin Burke:</b> The game of comedy's all about owning the stage, and from a physical point of view, it's beneficial that I'm a larger man. From my lumbering presence alone, I can't really help but dominate the stage. People think I'm older than I am actually, which also helps — people feel uncomfortable if comedians look too young or vulnerable. I've always looked like everybody's dad. When I was nine, I looked eleven, and so on. Once, I based an entire show on me looking older than I was. I asked the audience to guess my age; the average turned out to be 37 … I was 29 at the time. Sad, eh? But as someone who applies scientific logic to much in my life, I've come to see the positive side of that too!
+
+<b>Interviewer:</b> Kevin, there we must leave it. Thanks for being with us today.</div>
+  </div>
+</section>
+
+<!-- ================= SPEAKING ================= -->
+<section id="speaking">
+  <div class="sec-head"><span class="sec-num" style="background:var(--lemon); color:var(--ink);">TALK</span><h2>Speaking: Behind the Painted Smile</h2></div>
+  <p class="sec-sub">Work in pairs. Draw a card — one of you speaks for two minutes, the other asks at least two follow-up questions, then swap roles. Use the language box below the deck.</p>
+
+  <div class="card c-purple">
+    <div class="speak-card" id="speakCard">
+      <h3>Card deck ready</h3>
+      <p>Click "Draw a card" to reveal your discussion question.</p>
+    </div>
+    <div class="speak-controls">
+      <button class="btn" onclick="drawCard()">Draw a card</button>
+      <span style="align-self:center; font-family:'Fredoka'; color:#888;" id="cardCount"></span>
+    </div>
+    <div class="stems">
+      <b>Useful language for discussion:</b>
+      <ul>
+        <li>"It strikes me that…" / "I'm inclined to think…"</li>
+        <li>"That's a valid point, but have you considered…?"</li>
+        <li>"Playing devil's advocate…"</li>
+        <li>"That reminds me of…" / "Going back to what X said…"</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= READING ================= -->
+<section id="reading">
+  <div class="sec-head"><span class="sec-num" style="background:var(--teal);">PART 3</span><h2>Reading: The Actor's Double Life</h2></div>
+  <p class="sec-sub">The listening asked: is there another Kevin "behind the painted smile"? Here is what performers themselves say.</p>
+
+  <div class="reading">
+    <p class="dropcap">Ask an actor what they do for a living and many will hesitate before answering. Not because the question is difficult, but because the honest answer has two halves. Onstage, they are somebody else entirely — louder, braver, more articulate. Offstage, they may be exhausted, riddled with self-doubt, and entirely unsure where the next contract is coming from. "You spend your working life being other people," one veteran told me, "and the frightening part is discovering you've misplaced yourself somewhere along the way."</p>
+    <p>The statistics are <span class="hl">gruelling</span>. The vast majority of professional actors are out of work at any given moment, surviving on a patchwork of teaching, waiting tables and the occasional voiceover. Yet the same profession exercises an almost <span class="hl">irresistible pull</span>. Theatre schools turn away hundreds of applicants for every place, most of them fully aware that their chances of making a living are slim. What drives them is not naivety but something more complicated: the conviction that performing is not something they could do, but something they cannot help doing.</p>
+    <p>Then there is the question of the persona. Audiences feel a curious intimacy with actors — they have, after all, watched them cry, rage and fall in love — yet the relationship is entirely one-directional. The actor knows nothing of the audience member, while the audience member feels entitled to an opinion about everything from the actor's appearance to their private relationships. Some performers cultivate a public image deliberately; others find it simply happens to them, a character they never auditioned for that follows them home. Older actors sometimes describe a peculiar relief in finally being cast as parents and grandparents: at last, they say, the face in the mirror and the face on the poster agree.</p>
+    <p>The work itself demands an odd combination of vulnerability and armour. An actor must be porous enough to absorb a character's emotions yet robust enough to shrug off a scathing review by breakfast. Rejection is not an occasional blow but a weekly routine; a successful audition-to-job ratio of one in ten is considered enviable. Those who last learn to treat auditions not as judgement but as practice — each one, whatever the upshot, making them a fraction more <span class="hl">resilient</span>.</p>
+    <p>Perhaps that is the real double life: not the gap between the person and the role, but the gap between the fantasy of the profession and its reality. The painted smile, it turns out, is less a disguise than a discipline — and the performers who thrive are the ones who stopped trying to choose between the two selves and learned to let them negotiate.</p>
+  </div>
+
+  <div class="card c-coral">
+    <span class="tag warm">Task 1 · True / False / Not stated</span>
+    <h3>Six statements about the text</h3>
+    <div id="tfnsBox"></div>
+    <p class="feedback" id="tfnsMsg"></p>
+    <button class="btn" onclick="reviewTFNS()">Review answers</button>
+    <div class="bonus" id="b7">
+      <h4>🏆 Director's Cut 7 — Evidence Hunter</h4>
+      <p>Perfect reading comprehension! Now prove it: for the two TRUE statements (1 and 5), copy the <b>exact sentence</b> from the text that gives the evidence. Then explain in one sentence why statement 3 is "Not stated" rather than "False".</p>
+    </div>
+  </div>
+
+  <div class="card c-mint">
+    <span class="tag">Task 2 · Vocabulary in context</span>
+    <h3>What do the highlighted words mean?</h3>
+    <div class="instructions">Choose the meaning that fits the text for each highlighted word from the article: <b>gruelling · irresistible pull · shrug off · porous · scathing · resilient</b>.</div>
+    <div id="vicBox"></div>
+    <p class="feedback" id="vicMsg"></p>
+    <button class="btn" onclick="checkVIC()">Check answers</button>
+    <div class="keybox" id="vicKey">1. d &nbsp; 2. a &nbsp; 3. b &nbsp; 4. c &nbsp; 5. a &nbsp; 6. c</div>
+    <button class="btn ghost" onclick="toggleKey('vicKey',this)">Show key</button>
+    <div class="bonus" id="b8">
+      <h4>🏆 Director's Cut 8 — Deploy the Vocabulary</h4>
+      <p>All six meanings mastered! Write one sentence about <b>Kevin Burke or the reading's unnamed actor</b> using each of these: <b>gruelling</b>, <b>resilient</b>, <b>shrug off</b>. Your sentences must add a NEW idea, not copy the text.</p>
+    </div>
+  </div>
+
+  <div class="card c-lemon">
+    <span class="tag gold">Task 3 · Inference</span>
+    <h3>Read between the lines</h3>
+    <div class="instructions">Answer in full sentences in the boxes below. There are no wrong answers here — only unsupported ones. Be ready to quote the text when discussing in class.</div>
+    <ol style="margin-left:22px;">
+      <li>Why does the writer say the audience–actor relationship is "entirely one-directional"?</li>
+      <textarea placeholder="Your answer…"></textarea>
+      <li>What does the final sentence suggest about successful performers' attitude towards their two selves?</li>
+      <textarea placeholder="Your answer…"></textarea>
+      <li>Which idea from the Kevin Burke interview does this article echo most strongly? Justify your answer.</li>
+      <textarea placeholder="Your answer…"></textarea>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= HOMEWORK ================= -->
+<section id="homework">
+  <div class="sec-head"><span class="sec-num">HOMEWORK</span><h2>Recap the Whole Unit</h2></div>
+  <p class="sec-sub">Choose <b>TWO</b> tasks. HW1 is an interactive quiz on this page — the others are written in your notebook. Everything is vocabulary revision from across the unit.</p>
+
+  <div class="card c-lemon">
+    <span class="tag gold">HW1 · Interactive · do it here</span>
+    <h3>Unit Revision Quiz</h3>
+    <div class="instructions">Ten sentences, ten words or phrases from the whole unit. Choose the correct option, then press <b>Check quiz</b>. <b>2 points</b> per answer.</div>
+    <div id="hwqBox"></div>
+    <p class="feedback" id="hwqMsg"></p>
+    <button class="btn" onclick="checkHW()">Check quiz</button>
+    <button class="btn ghost" onclick="toggleKey('hwqKey',this)">Show answer key</button>
+    <div class="keybox" id="hwqKey">
+      1. b &nbsp; 2. a &nbsp; 3. c &nbsp; 4. c &nbsp; 5. d<br>
+      6. a &nbsp; 7. c &nbsp; 8. d &nbsp; 9. b &nbsp; 10. c
+    </div>
+  </div>
+
+  <div class="hw-grid">
+    <div class="hw-card"><h4>HW2 · Transcript phrases</h4><p>In Kevin Burke's interview, find the exact phrases for these ideas: <b>testing the water · dabbling in · on the lookout for · prone to · lumbering presence · hopscotched over</b>. Copy them, then write a sentence of your own with any three of them — about your life, not comedy.</p></div>
+    <div class="hw-card"><h4>HW3 · Reading expressions</h4><p>From "The Actor's Double Life", define in your own words: <b>gruelling · irresistible pull · shrug off · porous · resilient · one-directional</b>. Then use any three in sentences about work or study.</p></div>
+    <div class="hw-card"><h4>HW4 · Word formation relay</h4><p>Complete the table <i>verb → noun → adjective</i> for: <b>differ, behave, practise, trouble, truth, solve, divide, fashion, approve, friend, hazard, confide, long, doubt, mean</b>. Check yourself against the Word Formation answer key in the Vocabulary Gym.</p></div>
+  </div>
+
+  <div class="vocab-note">
+    <div class="copyrow">
+      <h4 style="font-family:'Fredoka';">📒 Unit Vocabulary Notebook</h4>
+      <button class="btn alt" style="font-size:.85rem; padding:7px 16px;" onclick="copyVocab()">Copy to clipboard</button>
+    </div>
+    <div id="vocabList" style="columns:2; column-gap:30px;">
+      <b>Part 1 cloze:</b> natural · strike · result in · loss of life · in fact · capable of · vast majority · come about · collapse · avert · upshot · trigger · chain reaction · factors · inhabitants<br><br>
+      <b>Word formation:</b> difference · behaviour · practicable/practical · troublesome · truthful · solution · division · fashionable · disapproval · friendship · hazardous · confidence · length · doubtful · meaning<br><br>
+      <b>Prepositions:</b> jealous of · step by step · on the house · at any cost · in advance · interest in · hide from · except for · in particular · by heart · instead of · keen on · patience with · difference between<br><br>
+      <b>Listening:</b> cliché · prone to · dabble in · hustle · lumbering · testing the water · hopscotch · own the stage<br><br>
+      <b>Reading:</b> gruelling · irresistible pull · shrug off · porous · scathing · resilient
+    </div>
+  </div>
+</section>
+
+<footer>Built for C1 learners · The Business of Being Funny · Remember to keep <b>12.mp3</b> in the same folder as this page for the audio to play.</footer>
+</div>
+
+<script>
+/* ============ SCORE ============ */
+let score=0, trophies=0;
+function addScore(n){score+=n; const el=document.getElementById('score'); el.textContent=score;
+  el.parentElement.classList.remove('spark'); void el.parentElement.offsetWidth; el.parentElement.classList.add('spark');}
+function unlock(id){
+  const b=document.getElementById(id);
+  if(!b||b.classList.contains('show'))return;
+  b.classList.add('show'); addScore(15); trophies++;
+  const t=document.getElementById('trophies'); if(t)t.textContent=trophies;
+  b.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+/* ============ TOGGLES ============ */
+function toggleKey(id,btn){const b=document.getElementById(id);
+  if(!btn.dataset.orig)btn.dataset.orig=btn.textContent;
+  b.classList.toggle('show');
+  btn.textContent=b.classList.contains('show')?'Hide':btn.dataset.orig;}
+function toggleScript(){document.getElementById('scriptBox').classList.toggle('show');}
+
+/* ============ TASK 1: CLOZE ============ */
+/* Clickable vocabulary in the text */
+document.addEventListener('click',e=>{
+ const vw=e.target.closest('.vw');
+ if(!vw)return;
+ document.querySelectorAll('.vw.sel').forEach(x=>x.classList.remove('sel'));
+ vw.classList.add('sel');
+ document.getElementById('drawerW').textContent=vw.textContent;
+ document.getElementById('drawerD').textContent=vw.dataset.def;
+ document.getElementById('drawer').classList.add('show');
+});
+
+const CLOZE=[
+ {n:1,opts:["nature","naturalistic","natural","native"],a:2,def:"<b>natural</b> (adj.) — existing in nature; not made by people"},
+ {n:2,opts:["hit","strike","fall","attack"],a:1,def:"<b>strike</b> (v.) — to happen suddenly; to hit (of disasters)"},
+ {n:3,opts:["result","effect","lead","cause"],a:0,def:"<b>result in</b> (phr. v.) — to cause as a consequence"},
+ {n:4,opts:["fatality","waste","harm","loss"],a:3,def:"<b>loss of life</b> — deaths; the state of no longer having life"},
+ {n:5,opts:["fact","certainty","honesty","truth"],a:0,def:"<b>in fact</b> — actually; used to emphasise the truth"},
+ {n:6,opts:["potential","conceivable","capable","possible"],a:2,def:"<b>capable of</b> — having the ability/power to do something"},
+ {n:7,opts:["wide","broad","full","vast"],a:3,def:"<b>vast majority</b> — the extremely large part of something"},
+ {n:8,opts:["bring","come","lay","make"],a:1,def:"<b>come about</b> (phr. v.) — to happen; to occur"},
+ {n:9,opts:["demolish","jumble","destroy","collapse"],a:3,def:"<b>collapse</b> (v.) — to fall down suddenly; to fail"},
+ {n:10,opts:["avert","evade","abstain","restrain"],a:0,def:"<b>avert</b> (v.) — to prevent something bad from happening"},
+ {n:11,opts:["upkeep","upturn","upshot","uptake"],a:2,def:"<b>upshot</b> (n.) — the final result or outcome"},
+ {n:12,opts:["up","on","out","off"],a:3,def:"<b>trigger off</b> (phr. v.) — to cause something to start"},
+ {n:13,opts:["activity","motion","progress","reaction"],a:3,def:"<b>chain reaction</b> — a series of events, each causing the next"},
+ {n:14,opts:["factors","phenomena","points","ingredients"],a:0,def:"<b>factor</b> (n.) — something that contributes to a result"},
+ {n:15,opts:["settlers","citizens","inhabitants","burghers"],a:2,def:"<b>inhabitant</b> (n.) — a person who lives in a place"}
+];
+let clozeDone=0;
+(function(){
+ const box=document.getElementById('clozeBox');
+ CLOZE.forEach(item=>{
+   const div=document.createElement('div'); div.className='gap-item';
+   const p=document.createElement('p'); p.innerHTML='<span class="qnum">'+(item.n>=10?item.n:'&nbsp;'+item.n)+'.</span>'; div.appendChild(p);
+   const o=document.createElement('div'); o.className='opts';
+   item.opts.forEach((t,i)=>{
+     const b=document.createElement('button'); b.className='opt'; b.textContent='abcd'[i]+') '+t;
+     b.onclick=()=>{
+       if(b.parentElement.dataset.done)return;
+       if(i===item.a){
+         b.classList.add('right'); b.parentElement.dataset.done=1;
+         const g=document.querySelector('.gap[data-n="'+item.n+'"]');
+         if(g)g.innerHTML='<b style="color:#1b7f4b">'+item.opts[item.a]+'</b>';
+         const dp=div.querySelector('.defpop'); dp.innerHTML='✅ '+item.def; dp.classList.add('show');
+         addScore(2); clozeDone++;
+         if(clozeDone===CLOZE.length)unlock('b1');
+       } else { b.classList.add('wrongpick'); setTimeout(()=>b.classList.remove('wrongpick'),600); }
+     };
+     o.appendChild(b);
+   });
+   div.appendChild(o);
+   const dp=document.createElement('div'); dp.className='defpop'; div.appendChild(dp);
+   box.appendChild(div);
+ });
+})();
+
+/* ============ FILL-IN TASKS ============ */
+function buildFill(boxId,items){
+ const box=document.getElementById(boxId);
+ items.forEach((it,idx)=>{
+   const row=document.createElement('div'); row.className='fill-row';
+   row.innerHTML='<b>'+(idx+1)+'.</b> '+it.pre+' <input type="text" data-accepts="'+it.ans+'" autocomplete="off"> '+it.post;
+   box.appendChild(row);
+ });
+}
+function checkFill(boxId,msgId,total,bonusId){
+ const box=document.getElementById(boxId); let ok=0;
+ box.querySelectorAll('input').forEach(inp=>{
+   const accepts=inp.dataset.accepts.toLowerCase().split('|').map(s=>s.trim());
+   const val=inp.value.trim().toLowerCase();
+   if(accepts.includes(val)){
+     if(!inp.dataset.scored){addScore(1); inp.dataset.scored=1;}
+     inp.classList.add('right'); inp.classList.remove('wrong'); ok++;
+   } else { inp.classList.add('wrong'); inp.classList.remove('right'); }
+ });
+ const m=document.getElementById(msgId);
+ m.className='feedback '+(ok===total?'good':'try');
+ m.textContent= ok===total ? 'Perfect — '+ok+'/'+total+'! 🎉' : ok+'/'+total+' correct. Have another go at the gaps in red.';
+ if(ok===total&&bonusId)unlock(bonusId);
+}
+
+/* Director's Cut bonus tasks (auto-checked) */
+buildFill('b3Box',[
+ {pre:"The", post:"(ORGANISE) of the whole event was nothing short of chaotic.", ans:"disorganisation|disorganization"},
+ {pre:"Her", post:"(PERSIST) finally paid off when she landed the lead role.", ans:"persistence"},
+ {pre:"The", post:"(WIDE) of the gap between the two versions surprised everyone.", ans:"width"}
+]);
+buildFill('b4Box',[
+ {pre:"He walked", post:"the stage", ans:"onto"},
+ {pre:"", post:"confidence, and faced the audience.", ans:"with"},
+ {pre:"He spoke", post:"the audience", ans:"to"},
+ {pre:"", post:"over an hour, without notes.", ans:"for"},
+ {pre:"He left", post:"a storm of applause.", ans:"to"}
+]);
+
+/* Station 1 — Word formation */
+buildFill('wfBox',[
+ {pre:"Does it make any", post:"(DIFFER) to them if we pay by cheque?", ans:"difference"},
+ {pre:"The two boys should receive a just punishment. Their", post:"(BEHAVE) at the inauguration ceremony was really outrageous.", ans:"behaviour|behavior"},
+ {pre:"Couldn't you provide us with a more", post:"(PRACTICE) scheme? The one you have just devised is not sensible at all.", ans:"practicable|practical"},
+ {pre:"As a matter of fact, the realisation of the project itself isn't so", post:"(TROUBLE) as the initial conditions we have to accept.", ans:"troublesome"},
+ {pre:"Jason is the most", post:"(TRUTH) person I know. He never tells lies.", ans:"truthful"},
+ {pre:"Mutual accusations will get you nowhere. You'd better try to find a more reasonable", post:"(SOLVE) to your conflict.", ans:"solution"},
+ {pre:"The main cause of the current crisis in the party seems to be the deep", post:"(DIVIDE) between its members.", ans:"division"},
+ {pre:"It's most", post:"(FASHION) among youths these days to spend their free time in the cinema.", ans:"fashionable"},
+ {pre:"Unfortunately, none of us managed to convince the director of the benefits that our experiment might bring. His", post:"(APPROVE) grew even stronger when Jack mentioned the possible cost of the venture.", ans:"disapproval"},
+ {pre:"Cindy and Mike's close", post:"(FRIEND) finally developed into a profound feeling and culminated in their marriage last year.", ans:"friendship"},
+ {pre:"Nobody has applied for the mission knowing how", post:"(HAZARD) it may be.", ans:"hazardous"},
+ {pre:"Tom has lost his", post:"(CONFIDE) in conventional medicine after many years of unsuccessful treatment and has opted for acupuncture.", ans:"confidence"},
+ {pre:"'What's the", post:"(LONG) of this rope?' — 'It's six metres long.'", ans:"length"},
+ {pre:"Mark's been terribly busy this week. It's", post:"(DOUBT) whether he'll attend our performance tomorrow.", ans:"doubtful"},
+ {pre:"'Why didn't they react to my warning?' — 'They might not have understood its discreet", post:"(MEAN).'", ans:"meaning"}
+]);
+
+/* Station 2 — Prepositions */
+buildFill('prepBox',[
+ {pre:"Although Mrs Parker was bitterly jealous", post:"her friends' higher wages in the company, she managed to avoid making sharp comments.", ans:"of"},
+ {pre:"The committee doesn't support any immediate changes. They say the modifications should be introduced step", post:"step.", ans:"by"},
+ {pre:"The landlord was very generous to us. All that we consumed in his inn was", post:"the house.", ans:"on"},
+ {pre:"We can't give up. Now that we have gone through the most difficult part of the route we must reach Khartoum", post:"any cost.", ans:"at"},
+ {pre:"If you had informed us", post:"advance that you wouldn't be giving any seminar, we wouldn't have gone to the trouble of making all the necessary arrangements.", ans:"in"},
+ {pre:"Jack's great interest", post:"Unidentified Flying Objects seems quite odd to his friends, but the boy considers it an absorbing hobby.", ans:"in"},
+ {pre:"What unavoidably makes me angry", post:"Frank is his inability to take prompt decisions.", ans:"at|with"},
+ {pre:"The football star is going to spend holidays in a secluded place where he expects to hide", post:"the curious journalists and photographers.", ans:"from"},
+ {pre:"All the candidates, except", post:"Mr Jenkins, have scored the required number of points.", ans:"for"},
+ {pre:"Customers used to complain about the high prices of food, meat", post:"particular.", ans:"in"},
+ {pre:"Learning this long definition", post:"heart, at first, seemed an impossible task. But, finally, I was successful <input type='text' data-accepts='in' autocomplete='off'> memorizing it.", ans:"by"},
+ {pre:"Instead", post:"a long speech at the beginning of the meeting, the chairman only gave a short welcome to all the participants.", ans:"of"},
+ {pre:"Only Mark was keen", post:"going fishing early in the morning. The rest of the company felt too tired after their long journey.", ans:"on"},
+ {pre:"Tell the children to stop fooling around or I'll lose my patience", post:"them.", ans:"with"},
+ {pre:"There's no difference", post:"price <input type='text' data-accepts='between' autocomplete='off'> these two printers.", ans:"in"}
+]);
+
+/* Station 3 — Use it or lose it (multiple choice) */
+const USE=[
+ {q:"We noticed the gas leak and acted immediately — luckily we ________ a complete disaster.",
+  o:["resolved","averted","collapsed","demolished"],a:1,w:"averted"},
+ {q:"He never tells lies; in fact, he's the most ________ person I know.",
+  o:["doubtful","hazardous","truthful","troublesome"],a:2,w:"truthful"},
+ {q:"The strike at the factory set off a ________ of cancellations and delays across the industry.",
+  o:["chain reaction","mortal upshot","division","upturn"],a:0,w:"chain reaction"},
+ {q:"The ________ between the two wings of the party seems irreparable.",
+  o:["confidence","upshot","division","friendship"],a:2,w:"division"},
+ {q:"After years of unsuccessful treatment, she lost ________ in her doctor and turned to acupuncture.",
+  o:["confidence","meaning","approval","length"],a:0,w:"confidence"},
+ {q:"Nobody applied for the mission, knowing how ________ it might turn out to be.",
+  o:["doubtful","hazardous","fashionable","truthful"],a:1,w:"hazardous"},
+ {q:"Hours of discussion, endless emails — and the ________ of it all? Nothing changed whatsoever.",
+  o:["upkeep","upturn","upshot","uptake"],a:2,w:"upshot"},
+ {q:"Her ________ of her colleague's considerably higher salary made the office atmosphere unbearable.",
+  o:["jealousy","behaviour","solution","disapproval"],a:0,w:"jealousy"}
+];
+let useDone=0;
+(function(){
+ const box=document.getElementById('useBox');
+ USE.forEach((item,i)=>{
+   const div=document.createElement('div'); div.className='mcqwrap'; div.dataset.a=item.a;
+   const p=document.createElement('p'); p.innerHTML='<b>'+(i+1)+'.</b> '+item.q; div.appendChild(p);
+   const o=document.createElement('div'); o.className='opts';
+   item.o.forEach((t,j)=>{
+     const b=document.createElement('button'); b.className='opt'; b.dataset.j=j;
+     b.textContent='abcd'[j]+') '+t;
+     b.onclick=()=>{
+       if(div.dataset.done)return;
+       if(j===item.a){
+         b.classList.add('right'); div.dataset.done=1; addScore(2); useDone++;
+         document.getElementById('useMsg').className='feedback good';
+         document.getElementById('useMsg').textContent='"'+item.w+'" is correct!';
+         if(useDone===USE.length)unlock('b2');
+       } else { b.classList.add('wrongpick'); setTimeout(()=>b.classList.remove('wrongpick'),600); }
+     };
+     o.appendChild(b);
+   });
+   div.appendChild(o); box.appendChild(div);
+ });
+})();
+
+/* Station 4 — Error clinic (C1-level traps) */
+buildFill('errBox',[
+ {pre:'The government has commissioned <u>a research</u> into the causes of the collapse.', post:"", ans:"research"},
+ {pre:"They <u>discussed about</u> the safety of the building for over an hour.", post:"", ans:"discussed"},
+ {pre:"<u>Despite of</u> the heavy losses, the company refused to change its policy.", post:"", ans:"despite"},
+ {pre:"He's very <u>sensible</u> to criticism — even a mild remark upsets him for days.", post:"", ans:"sensitive"},
+ {pre:"The committee <u>comprises of</u> twelve members from different departments.", post:"", ans:"comprises"}
+]);
+</script>
+
+<script>
+/* ============ MCQ (Listening Q15-20) ============ */
+const MCQ=[
+ {q:"15. When it is suggested that he is not really as happy as he appears, Kevin…",opts:{
+   A:"admits that he conforms to a stereotype.",
+   B:"explains why people might assume that.",
+   C:"accepts that he is an untypical comedian.",
+   D:"confirms that depression can be a problem."},a:"B"},
+ {q:"16. What does Kevin value most about the book entitled Laughter?",opts:{
+   A:"It was written with comedians in mind.",
+   B:"It helps him see why some comedians fail.",
+   C:"It shows him why audiences react as they do.",
+   D:"It aims to show what makes certain jokes funny."},a:"C"},
+ {q:"17. What does Kevin say about his time at university?",opts:{
+   A:"He regrets his choice of degree subject.",
+   B:"He is proud of his academic achievements.",
+   C:"He enjoyed getting involved in a range of activities.",
+   D:"He had a lot in common with other students on his course."},a:"C"},
+ {q:"18. After leaving university, Kevin…",opts:{
+   A:"was determined to build a career as a journalist.",
+   B:"didn't really enjoy the type of work he was doing.",
+   C:"set his sights on getting work as a television presenter.",
+   D:"took the opportunity to develop his skills as a performer."},a:"D"},
+ {q:"19. What does Kevin say about his television career?",opts:{
+   A:"It's not where he does his best work.",
+   B:"He wishes he hadn't accepted certain offers.",
+   C:"It's not as demanding as working on stage with a live audience.",
+   D:"He feels most comfortable doing a range of different programmes."},a:"A"},
+ {q:"20. Kevin believes that he is successful on stage because…",opts:{
+   A:"he is able to make audiences feel sorry for him.",
+   B:"he can convince audiences that he is in control.",
+   C:"he is able to laugh at his own appearance.",
+   D:"he can appeal to people's sense of logic."},a:"B"}
+];
+(function(){
+ const box=document.getElementById('mcqBox');
+ MCQ.forEach(item=>{
+   const div=document.createElement('div'); div.className='gap-item'; div.dataset.ans=item.a;
+   const p=document.createElement('p'); p.innerHTML='<span class="qnum">🎧</span><b>'+item.q+'</b>'; div.appendChild(p);
+   ['A','B','C','D'].forEach(L=>{
+     const b=document.createElement('button'); b.className='opt'; b.dataset.l=L;
+     b.style.display='block'; b.style.width='100%'; b.style.textAlign='left'; b.style.marginBottom='6px';
+     b.textContent=L+' — '+item.opts[L];
+     b.onclick=()=>{
+       if(div.dataset.done)return;
+       if(L===item.a){b.classList.add('right'); div.dataset.done=1; addScore(3);}
+       else{b.classList.add('wrongpick'); setTimeout(()=>b.classList.remove('wrongpick'),600);}
+     };
+     div.appendChild(b);
+   });
+   box.appendChild(div);
+ });
+})();
+function checkMCQ(){
+ let ok=0;
+ document.querySelectorAll('#mcqBox .gap-item').forEach(div=>{
+   const ans=div.dataset.ans;
+   div.querySelectorAll('.opt').forEach(b=>{
+     b.classList.remove('right','wrongpick');
+     if(b.dataset.l===ans)b.classList.add('right');
+   });
+   if(div.dataset.done)ok++;
+ });
+ const m=document.getElementById('mcqMsg'); m.className='feedback '+(ok===6?'good':'try');
+ m.textContent='You scored '+ok+'/6. '+ (ok===6?'Full marks — outstanding!':ok>=4?'Strong listening. Check the evidence in the key.':'Listen once more and check the key.');
+ if(ok===6)unlock('b6');
+}
+
+/* ============ Round 2 listening gap-fill ============ */
+buildFill('liBox',[
+ {pre:'"People wrongly tend to assume that comedians will be', post:'to depression."', ans:"prone"},
+ {pre:'"Most of the time, laughter\'s simply a nervous', post:', a breaking of tension."', ans:"mechanism"},
+ {pre:'"It was fun, but I wasn\'t', post:'on journalism."', ans:"set"},
+ {pre:'"…so I started', post:'in stand-up comedy — just testing the water."', ans:"dabbling"},
+ {pre:'"It\'s certainly where I think I\'m best, and TV can\'t', post:'that somehow."', ans:"capture"}
+]);
+
+/* ============ TF/NS ============ */
+const TFNS=[
+ {s:"1. Many actors hesitate before telling people what they do for a living.",a:"T"},
+ {s:"2. The majority of professional actors are permanently under contract.",a:"F"},
+ {s:"3. Actors earn most of their income from voiceover work.",a:"NS"},
+ {s:"4. Applicants to theatre schools usually overestimate their chances of success.",a:"F"},
+ {s:"5. Some actors feel relieved when they are finally cast in older roles.",a:"T"},
+ {s:"6. The writer believes the 'painted smile' is essentially a disguise.",a:"F"}
+];
+let tfnsDone=0;
+(function(){
+ const box=document.getElementById('tfnsBox');
+ TFNS.forEach(item=>{
+   const div=document.createElement('div'); div.className='gap-item'; div.dataset.ans=item.a;
+   const p=document.createElement('p'); p.innerHTML='<b>'+item.s+'</b>'; div.appendChild(p);
+   const row=document.createElement('div'); row.className='tfns';
+   [['T','True'],['F','False'],['NS','Not stated']].forEach(([v,label])=>{
+     const b=document.createElement('button'); b.dataset.v=v; b.textContent=label;
+     b.onclick=()=>{
+       if(div.dataset.done)return;
+       if(v===item.a){b.classList.add('right'); div.dataset.done=1; addScore(2); tfnsDone++;
+         if(tfnsDone===TFNS.length)unlock('b7');}
+       else{b.classList.add('wrongpick'); setTimeout(()=>b.classList.remove('wrongpick'),600);}
+     };
+     row.appendChild(b);
+   });
+   div.appendChild(row); box.appendChild(div);
+ });
+})();
+
+function reviewTFNS(){
+ let ok=0;
+ document.querySelectorAll('#tfnsBox .gap-item').forEach(div=>{
+   const ans=div.dataset.ans;
+   div.querySelectorAll('.tfns button').forEach(b=>{
+     b.classList.remove('right','wrongpick');
+     if(b.dataset.v===ans)b.classList.add('right');
+   });
+   if(div.dataset.done)ok++;
+ });
+ const m=document.getElementById('tfnsMsg'); m.className='feedback '+(ok===6?'good':'try');
+ m.textContent='You scored '+ok+'/6. '+(ok===6?'Full marks! 🎉':ok>=4?'Good reading. Re-check the evidence for the red ones.':'Re-read the relevant paragraph and try again.');
+ if(ok===6)unlock('b7');
+}
+
+/* ============ Vocabulary in context ============ */
+const VIC=[
+ {w:"gruelling",opts:{a:"carefully planned",b:"surprisingly enjoyable",c:"legally required",d:"extremely tiring and demanding"},a:"d"},
+ {w:"irresistible pull",opts:{a:"a powerful attraction that is hard to resist",b:"a temporary interest",c:"an unpleasant duty",d:"a fair payment"},a:"a"},
+ {w:"shrug off",opts:{a:"to accept gratefully",b:"to dismiss as unimportant",c:"to study carefully",d:"to announce publicly"},a:"b"},
+ {w:"porous",opts:{a:"dishonest",b:"physically weak",c:"able to absorb things easily",d:"difficult to understand"},a:"c"},
+ {w:"scathing",opts:{a:"harshly critical",b:"surprisingly kind",c:"extremely brief",d:"deliberately funny"},a:"a"},
+ {w:"resilient",opts:{a:"naturally talented",b:"overly confident",c:"able to recover quickly from difficulties",d:"eager to please others"},a:"c"}
+];
+(function(){
+ const box=document.getElementById('vicBox');
+ VIC.forEach((item,i)=>{
+   const div=document.createElement('div'); div.className='gap-item'; div.dataset.ans=item.a;
+   const p=document.createElement('p'); p.innerHTML='<b>'+(i+1)+'. '+item.w+'</b> means…'; div.appendChild(p);
+   const row=document.createElement('div'); row.className='opts';
+   ['a','b','c','d'].forEach(L=>{
+     const b=document.createElement('button'); b.className='opt'; b.dataset.l=L;
+     b.textContent=L+') '+item.opts[L];
+     b.onclick=()=>{
+       if(div.dataset.done)return;
+       if(L===item.a){b.classList.add('right'); div.dataset.done=1; addScore(2);}
+       else{b.classList.add('wrongpick'); setTimeout(()=>b.classList.remove('wrongpick'),600);}
+     };
+     row.appendChild(b);
+   });
+   div.appendChild(row); box.appendChild(div);
+ });
+})();
+function checkVIC(){
+ let ok=0;
+ document.querySelectorAll('#vicBox .gap-item').forEach(div=>{
+   const ans=div.dataset.ans;
+   div.querySelectorAll('.opt').forEach(b=>{
+     b.classList.remove('right','wrongpick');
+     if(b.dataset.l===ans)b.classList.add('right');
+   });
+   if(div.dataset.done)ok++;
+ });
+ const m=document.getElementById('vicMsg'); m.className='feedback '+(ok===6?'good':'try');
+ m.textContent=ok+'/6. '+(ok===6?'Excellent — your inference skills are working hard.':'Check the key and re-read the sentences around each word.');
+ if(ok===6)unlock('b8');
+}
+
+/* ============ Speaking cards ============ */
+const CARDS=[
+ {t:"1 · Laughing together",q:"Kevin cites Robert Provine's finding: people rarely laugh alone at home, yet laugh at almost anything in a café. Why is laughter so social? Do you laugh more when others are around — and does the same apply to online communication? Give examples from your own experience."},
+ {t:"2 · The sad clown cliché",q:"'Every comedian carries within a black heart' — Kevin says this is fundamentally untrue, yet the stereotype survives. Why do we want artists to be troubled? Is there any profession where being unhappy is seen as an advantage? Discuss with examples of performers or artists you know."},
+ {t:"3 · Owning the stage",q:"Kevin says comedy is 'all about owning the stage' — and that his lumbering presence alone lets him dominate it. What makes a person commanding in front of an audience: charisma, technique, appearance, or preparation? Would Kevin's strategy work for a teacher, a politician, or a presenter?"},
+ {t:"4 · The double life",q:"The reading describes an actor's 'double life': the gap between the public persona and the private person. Is this true of other public figures — influencers, politicians, TV presenters? Where should the line between persona and person lie, and who is harmed when it disappears?"},
+ {t:"5 · Work you cannot help doing",q:"The reading says actors are driven by 'the conviction that performing is not something they could do, but something they cannot help doing.' Kevin abandoned journalism for comedy. Is a secure, well-paid job worth more than a calling? What would you — or would you not — risk for work you love?"},
+ {t:"6 · Dealing with rejection",q:"Actors learn to treat auditions 'not as judgement but as practice'; Kevin 'hustled and gigged wherever possible'. How do you personally react to rejection or failure? Is resilience born or trained? Tell your partner about one setback and what it taught you."}
+];
+let deck=[];
+function drawCard(){
+ if(deck.length===0)deck=CARDS.map((c,i)=>i).sort(()=>Math.random()-.5);
+ const i=deck.pop(); const c=CARDS[i];
+ document.getElementById('speakCard').innerHTML='<h3>'+c.t+'</h3><p>'+c.q+'</p>';
+ document.getElementById('cardCount').textContent=(6-deck.length)+' / 6 drawn';
+ addScore(5);
+}
+
+/* ============ HW1: Unit Revision Quiz ============ */
+const HWQ=[
+ {q:"The committee's decision resulted ________ a complete reorganisation of the department.",
+  o:["to","in","from","with"],a:1},
+ {q:"There was no time to ________ the crisis; it escalated within minutes.",
+  o:["avert","evade","abstain","restrain"],a:0},
+ {q:"The ________ of the investigation was that nobody was to blame.",
+  o:["upkeep","upturn","upshot","uptake"],a:2},
+ {q:"The building is simply not ________ of withstanding another earthquake.",
+  o:["possible","conceivable","capable","potential"],a:2},
+ {q:"The hurricane triggered ________ a series of power cuts across the whole region.",
+  o:["up","on","out","off"],a:3},
+ {q:"We need a more ________ solution — yours is impossible to carry out.",
+  o:["practicable","truthful","hazardous","doubtful"],a:0},
+ {q:"His ________ grew even stronger when he saw the final cost estimate.",
+  o:["friendship","division","disapproval","confidence"],a:2},
+ {q:"Tell the children to stop fooling around or I'll lose my patience ________ them.",
+  o:["to","for","at","with"],a:3},
+ {q:"She learned the long definition ________ heart in a single evening.",
+  o:["with","by","in","at"],a:1},
+ {q:"Nobody applied for the ________ mission, knowing perfectly well what the risks were.",
+  o:["doubtful","fashionable","hazardous","troublesome"],a:2}
+];
+(function(){
+ const box=document.getElementById('hwqBox');
+ HWQ.forEach((item,i)=>{
+   const div=document.createElement('div'); div.className='mcqwrap'; div.dataset.a=item.a;
+   const p=document.createElement('p'); p.innerHTML='<b>'+(i+1)+'.</b> '+item.q; div.appendChild(p);
+   const o=document.createElement('div'); o.className='opts';
+   item.o.forEach((t,j)=>{
+     const b=document.createElement('button'); b.className='opt'; b.dataset.j=j;
+     b.textContent='abcd'[j]+') '+t;
+     b.onclick=()=>{
+       if(div.dataset.done)return;
+       if(j===item.a){b.classList.add('right'); div.dataset.done=1; addScore(2);}
+       else{b.classList.add('wrongpick'); setTimeout(()=>b.classList.remove('wrongpick'),600);}
+     };
+     o.appendChild(b);
+   });
+   div.appendChild(o); box.appendChild(div);
+ });
+})();
+function checkHW(){
+ let ok=0;
+ document.querySelectorAll('#hwqBox .mcqwrap').forEach(div=>{
+   const ans=div.dataset.a;
+   div.querySelectorAll('.opt').forEach(b=>{
+     b.classList.remove('right','wrongpick');
+     if(b.dataset.j===ans)b.classList.add('right');
+   });
+   if(div.dataset.done)ok++;
+ });
+ const m=document.getElementById('hwqMsg'); m.className='feedback '+(ok===10?'good':'try');
+ m.textContent='You scored '+ok+'/10. '+(ok===10?'Excellent — the unit vocabulary is yours.':ok>=7?'Solid revision. Check the key for the gaps.':'Revise the Vocabulary Gym and try the quiz again.');
+}
+
+/* ============ Copy vocab ============ */
+function copyVocab(){
+ const text=document.getElementById('vocabList').innerText;
+ if(navigator.clipboard){navigator.clipboard.writeText(text).then(()=>alert('Vocabulary copied to your clipboard! 📒'));}
+ else{alert('Copy not supported in this browser — select the text manually.');}
+}
+</script>
+</body>
+</html>
